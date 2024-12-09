@@ -11,7 +11,9 @@ const mainReducer = (state = nativeState, action) => {
 				...state,
 				work: {
 					...state.work,
-					favourite: state.work.favourite.concat(action.payload),
+					favourite: state.work.favourite.some(fav => fav === action.payload)
+						? [...state.work.favourite]
+						: [...state.work.favourite, action.payload],
 				},
 			};
 		case "REMOVE_FROM_FAVOURITE":
