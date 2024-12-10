@@ -11,15 +11,20 @@ import Job from "./Job";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_WORK } from "../redux/reducers/actions";
 
 const MainSearch = () => {
 	const [query, setQuery] = useState("");
 	const [jobs, setJobs] = useState([]);
 
 	const favouriteArray = useSelector(reduxState => {
-		return reduxState.work.favourite;
+		console.log("reduxState", reduxState);
+
+		return reduxState.favourite.work.favourite;
 	});
+
+	const dispatch = useDispatch();
 
 	const baseEndpoint =
 		"https://strive-benchmark.herokuapp.com/api/jobs?search=";
@@ -36,6 +41,11 @@ const MainSearch = () => {
 			if (response.ok) {
 				const { data } = await response.json();
 				setJobs(data);
+				dispatch({
+					type: GET_WORK,
+					payload: data,
+				});
+				localStorage.clear();
 			} else {
 				alert("Error fetching results");
 			}

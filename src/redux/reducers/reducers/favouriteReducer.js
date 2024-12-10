@@ -1,22 +1,27 @@
+import { ADD_TO_FAVOURITE, REMOVE_TO_FAVOURITE } from "../actions";
+
 const nativeState = {
 	work: {
 		favourite: [],
 	},
 };
 
-const mainReducer = (state = nativeState, action) => {
+const favouriteReducer = (state = nativeState, action) => {
 	switch (action.type) {
-		case "ADD_TO_FAVOURITE":
+		case ADD_TO_FAVOURITE:
+			console.log(state.work);
 			return {
 				...state,
 				work: {
 					...state.work,
-					favourite: state.work.favourite.some(fav => fav === action.payload)
+					favourite: state.work.favourite.some(
+						fav => fav._id === action.payload._id,
+					)
 						? [...state.work.favourite]
 						: [...state.work.favourite, action.payload],
 				},
 			};
-		case "REMOVE_FROM_FAVOURITE":
+		case REMOVE_TO_FAVOURITE:
 			return {
 				...state,
 				work: {
@@ -31,4 +36,4 @@ const mainReducer = (state = nativeState, action) => {
 	}
 };
 
-export default mainReducer;
+export default favouriteReducer;

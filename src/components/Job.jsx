@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
+import { addToFavouriteAction } from "../redux/reducers/actions";
+
 const Job = ({ data }) => {
 	const dispatch = useDispatch();
 
@@ -21,10 +23,7 @@ const Job = ({ data }) => {
 					</a>
 					<Button
 						onClick={() => {
-							dispatch({
-								type: "ADD_TO_FAVOURITE",
-								payload: data,
-							});
+							dispatch(addToFavouriteAction(data));
 						}}
 						variant="success"
 					>
